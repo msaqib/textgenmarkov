@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read Text File with JavaScript</title>
+</head>
+<body>
+    <section class="centered">
+        <h2>Random English text generator</h2>
+        <section class="training">
+            <form action="" class="train">
+                <label for="inputfile">Select a text file with some English text: </label>
+                <input type="file" name="inputfile" id="fileInput" />
+                <label for="numpara">Number of paragraphs: </label>
+                <input name="numpara" type="number" id="paras" value="5">
+                <button type="button" id="submit" class="btn" disabled>Generate</button> 
+            </form>
+            
+        </section>
+    </section>
+    
+    <section id="fileContents"></section>
+
+    <script src="app.js"></script>
+</body>
+</html>
