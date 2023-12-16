@@ -1,7 +1,8 @@
-document.getElementById('fileInput').addEventListener('change', handleFileSelect);
 const genButton = document.getElementById('submit')
-const preElement = document.getElementById('fileContents')
-genButton.onclick = generateRandomText
+const fileButton = document.getElementById('fileInput')
+const txtElement = document.getElementById('fileContents')
+genButton.addEventListener('click', generateRandomText)
+fileButton.addEventListener('change', handleFileSelect)
 
 let markovModel = {}
 
@@ -16,15 +17,16 @@ function handleFileSelect(event) {
             const fileContents = e.target.result;
             const words = fileContents.split(/\s+/)
             for (let i = 0 ; i < words.length ; i++) {
-                const currentWord = words[i]
-                const nextWord = words[i + 1]
+                const currentWord = words[i].toLowerCase()
                 if (!markovModel[currentWord]) {
                     markovModel[currentWord] = []
                 }
-                markovModel[currentWord].push(nextWord)
+                if (i < words.length - 1) {
+                    const nextWord = words[i + 1].toLowerCase()
+                    markovModel[currentWord].push(nextWord)
+                }
             }
             genButton.disabled = false
-            //generateText(10)
         };
 
         // Read the file as text
@@ -39,7 +41,7 @@ function generateText(numWords) {
     const initialWordIndex = Math.floor(Math.random()*keysArray.length)
     const initialWord = keysArray[initialWordIndex]
     let currentWord = initialWord
-    let result = currentWord
+    let result = '<span class="first">' + currentWord + '</span>'
     for (let i = 0 ; i < numWords - 1 ; i++) {
         const potentialNextWords = markovModel[currentWord]
         if (!potentialNextWords || potentialNextWords.length === 0) {
@@ -53,19 +55,24 @@ function generateText(numWords) {
     return result
 }
 
+function generateRandomParagraph() {
+    let result = '<p>'
+    const numSentences = 3 + Math.floor(Math.random()*8)
+    for (let j = 0 ; j < numSentences ; j++) {
+        const numWords = 5 + Math.floor(Math.random()*16)
+        result = result + generateText(numWords) + '. '
+    }
+    result = result + '</p>'
+    return result
+}
+
 function generateRandomText() {
     const numParas = document.getElementById('paras')
     const numParasInt = parseInt(numParas.value, 10)
     let result = ''
     for (let i = 0 ; i < numParasInt ; i++) {
-        result = result + '<p>'
-        const numSentences = 3 + Math.floor(Math.random()*8)
-        for (let j = 0 ; j < numSentences ; j++) {
-            const numWords = 5 + Math.floor(Math.random()*16)
-            result = result + generateText(numWords) + '. '
-        }
-        result = result + '</p>'
+        result = result + generateRandomParagraph()
     }
 
-    preElement.innerHTML = result
+    txtElement.innerHTML = result
 }

@@ -1,6 +1,7 @@
 *, ::before, ::after {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -31,7 +32,6 @@ label {
 input {
     padding: 8px;
     margin-bottom: 16px;
-    box-sizing: border-box;
 }
 
 button {
@@ -55,4 +55,13 @@ button:disabled {
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#fileContents p {
+    line-height: 1.5;
+    margin-bottom: 1.2rem;
+}
+
+.first {
+    text-transform: capitalize;
 }
